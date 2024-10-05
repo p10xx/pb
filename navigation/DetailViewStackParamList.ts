@@ -2,9 +2,14 @@ import { LightningTransaction } from '../class/wallets/types';
 import { SendDetailsParams } from './SendDetailsStackParamList';
 
 export type DetailViewStackParamList = {
+  Onboarding: undefined;
   UnlockWithScreen: undefined;
   WalletsList: { scannedData?: string };
-  WalletTransactions: { isLoading?: boolean; walletID: string; walletType: string };
+  WalletTransactions: {
+    isLoading?: boolean;
+    walletID: string;
+    walletType: string;
+  };
   WalletDetails: { walletID: string };
   TransactionDetails: { transactionId: string; hash: string; walletID: string };
   TransactionStatus: { hash?: string; walletID?: string };
@@ -28,6 +33,7 @@ export type DetailViewStackParamList = {
   Success: undefined;
   WalletAddresses: { walletID: string };
   AddWalletRoot: undefined;
+  AddAccountRoot: undefined;
   SendDetailsRoot: {
     screen: string;
     params: SendDetailsParams;
@@ -67,14 +73,14 @@ export type DetailViewStackParamList = {
   ViewEditMultisigCosignersRoot: { walletID: string; cosigners: string[] };
   WalletXpubRoot: undefined;
   SignVerifyRoot: {
-    screen: 'SignVerify';
+    screen: "SignVerify";
     params: {
       walletID: string;
       address: string;
     };
   };
   ReceiveDetailsRoot: {
-    screen: 'ReceiveDetails';
+    screen: "ReceiveDetails";
     params: {
       walletID: string;
       address: string;

@@ -66,6 +66,7 @@ import { useSettings } from '../hooks/context/useSettings';
 import { useStorage } from '../hooks/context/useStorage';
 import WalletTransactions from '../screen/wallets/WalletTransactions';
 import AddWalletButton from '../components/AddWalletButton';
+import OnboardingStack from "../onboarding/navigation/OnboardingStack";
 
 const DetailViewStackScreensStack = () => {
   const theme = useTheme();
@@ -111,8 +112,24 @@ const DetailViewStackScreensStack = () => {
   return (
     <DetailViewStack.Navigator
       initialRouteName="WalletsList"
-      screenOptions={{ headerShadowVisible: false, animationTypeForReplace: 'push' }}
+      screenOptions={{
+        headerShadowVisible: false,
+        animationTypeForReplace: 'push',
+      }}
     >
+      <DetailViewStack.Screen
+        name="Onboarding"
+        component={OnboardingStack}
+        options={navigationStyle({
+          statusBarStyle: 'auto',
+          headerStyle: {
+            backgroundColor: theme.colors.customHeader,
+          },
+           headerShown: false,
+          headerBackVisible: false,
+        animationTypeForReplace: 'push',
+        })(theme)}
+      />
       <DetailViewStack.Screen name="WalletsList" component={WalletsList} options={navigationStyle(walletListScreenOptions)(theme)} />
       <DetailViewStack.Screen name="WalletTransactions" component={WalletTransactions} options={getWalletTransactionsOptions} />
       <DetailViewStack.Screen
@@ -242,13 +259,18 @@ const DetailViewStackScreensStack = () => {
       <DetailViewStack.Screen
         name="WalletAddresses"
         component={WalletAddresses}
-        options={navigationStyle({ title: loc.addresses.addresses_title, statusBarStyle: 'auto' })(theme)}
+        options={navigationStyle({
+          title: loc.addresses.addresses_title,
+          statusBarStyle: 'auto',
+        })(theme)}
       />
-
       <DetailViewStack.Screen
         name="AddWalletRoot"
         component={AddWalletStack}
-        options={navigationStyle({ closeButtonPosition: CloseButtonPosition.Left, ...NavigationFormModalOptions })(theme)}
+        options={navigationStyle({
+          closeButtonPosition: CloseButtonPosition.Left,
+          ...NavigationFormModalOptions,
+        })(theme)}
       />
       <DetailViewStack.Screen name="SendDetailsRoot" component={SendDetailsStack} options={NavigationDefaultOptions} />
       <DetailViewStack.Screen name="LNDCreateInvoiceRoot" component={LNDCreateInvoiceRoot} options={NavigationDefaultOptions} />
@@ -313,7 +335,9 @@ const DetailViewStackScreensStack = () => {
       <DetailViewStack.Screen
         name="ElectrumSettings"
         component={ElectrumSettingsComponent}
-        options={navigationStyle({ title: loc.settings.electrum_settings_server })(theme)}
+        options={navigationStyle({
+          title: loc.settings.electrum_settings_server,
+        })(theme)}
       />
       <DetailViewStack.Screen
         name="EncryptStorage"
@@ -354,7 +378,12 @@ const DetailViewStackScreensStack = () => {
       <DetailViewStack.Screen
         name="ViewEditMultisigCosignersRoot"
         component={ViewEditMultisigCosignersStackRoot}
-        options={{ ...NavigationDefaultOptions, ...StatusBarLightOptions, gestureEnabled: false, fullScreenGestureEnabled: false }}
+        options={{
+          ...NavigationDefaultOptions,
+          ...StatusBarLightOptions,
+          gestureEnabled: false,
+          fullScreenGestureEnabled: false,
+        }}
         initialParams={{ walletID: undefined, cosigners: undefined }}
       />
       <DetailViewStack.Screen

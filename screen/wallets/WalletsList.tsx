@@ -24,7 +24,10 @@ import { useStorage } from '../../hooks/context/useStorage';
 import TotalWalletsBalance from '../../components/TotalWalletsBalance';
 import { useSettings } from '../../hooks/context/useSettings';
 
-const WalletsListSections = { CAROUSEL: 'CAROUSEL', TRANSACTIONS: 'TRANSACTIONS' };
+const WalletsListSections = {
+  CAROUSEL: 'CAROUSEL',
+  TRANSACTIONS: 'TRANSACTIONS',
+};
 
 type SectionData = {
   key: string;
@@ -148,7 +151,9 @@ const WalletsList: React.FC = () => {
   useEffect(() => {
     // new wallet added
     if (wallets.length > walletsCount.current) {
-      walletsCarousel.current?.scrollToItem({ item: wallets[walletsCount.current] });
+      walletsCarousel.current?.scrollToItem({
+        item: wallets[walletsCount.current],
+      });
     }
 
     walletsCount.current = wallets.length;
@@ -180,7 +185,10 @@ const WalletsList: React.FC = () => {
         dispatch({ type: ActionTypes.SET_LOADING, payload: false });
         return;
       }
-      dispatch({ type: ActionTypes.SET_LOADING, payload: showLoadingIndicator });
+      dispatch({
+        type: ActionTypes.SET_LOADING,
+        payload: showLoadingIndicator,
+      });
       refreshAllWalletTransactions(undefined, showUpdateStatusIndicator).finally(() => {
         dispatch({ type: ActionTypes.SET_LOADING, payload: false });
       });
@@ -202,7 +210,7 @@ const WalletsList: React.FC = () => {
           walletType: item.type,
         });
       } else {
-        navigate('AddWalletRoot');
+        navigate('AddAccountRoot');
       }
     },
     [navigate],
@@ -421,6 +429,12 @@ const WalletsList: React.FC = () => {
     { key: WalletsListSections.CAROUSEL, data: [WalletsListSections.CAROUSEL] },
     { key: WalletsListSections.TRANSACTIONS, data: dataSource },
   ];
+
+  useEffect(() => {
+    if (walletsCount.current < 1) {
+      navigate('Onboarding');
+    }
+  }, [navigate, walletsCount]);
 
   return (
     <View style={styles.root}>

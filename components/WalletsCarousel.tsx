@@ -81,6 +81,7 @@ const NewWalletPanel: React.FC<NewWalletPanelProps> = ({ onPress }) => {
           isLargeScreen ? {} : { width: itemWidth },
         ]}
       >
+        <Text>hi</Text>
         <Text style={[nStyles.addAWAllet, { color: colors.foregroundColor }]}>{loc.wallets.list_create_a_wallet}</Text>
         <Text style={[nStyles.addLine, { color: colors.alternativeTextColor }]}>{loc.wallets.list_create_a_wallet_text}</Text>
         <View style={nStyles.button}>
@@ -262,7 +263,15 @@ export const WalletCarouselItem: React.FC<WalletCarouselItemProps> = React.memo(
           }}
           onPress={handlePress}
         >
-          <View style={[iStyles.shadowContainer, { backgroundColor: colors.background, shadowColor: colors.shadowColor }]}>
+          <View
+            style={[
+              iStyles.shadowContainer,
+              {
+                backgroundColor: colors.background,
+                shadowColor: colors.shadowColor,
+              },
+            ]}
+          >
             <LinearGradient colors={WalletGradient.gradientsFor(item.type)} style={iStyles.grad}>
               <Image source={image} style={iStyles.image} />
               <Text style={iStyles.br} />
@@ -399,10 +408,16 @@ const WalletsCarousel = forwardRef<FlatListRefType, WalletsCarouselProps>((props
   const onScrollToIndexFailed = (error: { averageItemLength: number; index: number }): void => {
     console.debug('onScrollToIndexFailed');
     console.debug(error);
-    flatListRef.current?.scrollToOffset({ offset: error.averageItemLength * error.index, animated: true });
+    flatListRef.current?.scrollToOffset({
+      offset: error.averageItemLength * error.index,
+      animated: true,
+    });
     setTimeout(() => {
       if (data.length !== 0 && flatListRef.current !== null) {
-        flatListRef.current.scrollToIndex({ index: error.index, animated: true });
+        flatListRef.current.scrollToIndex({
+          index: error.index,
+          animated: true,
+        });
       }
     }, 100);
   };
